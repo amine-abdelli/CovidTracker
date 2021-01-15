@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Button } from "antd";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYW1pbmVhYmRlbGxpIiwiYSI6ImNranU1ZWZzczJ6bjcyem1qZ25zb3UxbjYifQ.hbedsblNSZl7EnltQgLLkQ";
 
-let map, markers;
+let map, markers; // Bonne pratique ou non??????
 
 export default class MapAPI extends Component {
   state = {
@@ -17,22 +16,23 @@ export default class MapAPI extends Component {
 
   componentDidMount() {
     // const confirmed = confirmedCases.default;
-
+    // Création de la carte
     map = new mapboxgl.Map({
       container: this.mapContainer,
       style: "mapbox://styles/amineabdelli/ckjuc8dph019219o4mu8r4lth",
       center: [this.state.lng, this.state.lat],
       zoom: this.state.zoom,
     });
+    // Focus de la carte par défault
+    // map.on("move", () => {
+    //   this.setState({
+    //     lng: map.getCenter().lng.toFixed(4),
+    //     lat: map.getCenter().lat.toFixed(4),
+    //     zoom: map.getZoom().toFixed(2),
+    //   });
+    // });
 
-    map.on("move", () => {
-      this.setState({
-        lng: map.getCenter().lng.toFixed(4),
-        lat: map.getCenter().lat.toFixed(4),
-        zoom: map.getZoom().toFixed(2),
-      });
-    });
-
+    // Ajout des marqueurs par défaut au premier rendu
     markers = Object.entries(this.props.dataTargeted).map(
       ([key, value], index) => {
         return new mapboxgl.Marker({
@@ -43,10 +43,13 @@ export default class MapAPI extends Component {
           .addTo(map);
       }
     );
+    console.log("hello world");
   }
 
   componentDidUpdate() {
+    // Suppresion anciens marqueurs
     markers.forEach((marker) => marker.remove());
+    // Ajout des nouveaux marqueurs
     markers = Object.entries(this.props.dataTargeted).map(
       ([key, value], index) => {
         return new mapboxgl.Marker({
@@ -57,7 +60,7 @@ export default class MapAPI extends Component {
           .addTo(map);
       }
     );
-
+    // Nouveau focus de la carte
     map.on("move", () => {
       this.setState({
         lng: map.getCenter().lng.toFixed(4),
@@ -65,6 +68,7 @@ export default class MapAPI extends Component {
         zoom: map.getZoom().toFixed(2),
       });
     });
+    console.log(Date.now());
   }
 
   render() {
@@ -81,10 +85,6 @@ export default class MapAPI extends Component {
             className="mapContainer"
           />
         </div>
-
-        <Button onClick={this.handleClick} block>
-          Default
-        </Button>
       </Fragment>
     );
   }
