@@ -1,33 +1,48 @@
 import React, { Component } from "react";
-import { MapAPI, SelectList, Buttons } from "./components";
+import { Map, SelectList } from "./components";
 import mapboxgl from "mapbox-gl";
 import "./sass/App.scss";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
+import Chart from "./components/Chart";
+import { Cards } from "./components/Cards";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYW1pbmVhYmRlbGxpIiwiYSI6ImNranU1ZWZzczJ6bjcyem1qZ25zb3UxbjYifQ.hbedsblNSZl7EnltQgLLkQ";
-let fetchedCountry = null; //Bonne ou mauvaise pratique?
 export default class App extends Component {
   state = {
     data: {},
     dataPC: {},
     loading: true,
+    load2: true,
+    listLoading: true,
+    globalData: null,
     selectedCountry: "France",
+    timeLine: null,
     countryData: null,
+    countryList: {},
   };
 
   async componentDidMount() {
     // Fetch APIs premier rendu
+    const timeLineUrl = `https://api.covid19api.com/country/${this.state.selectedCountry}`;
+    const timeLine = await axios.get(timeLineUrl);
+
+    const urlGlobal = "https://covid19.mathdro.id/api";
+    const fetchedGlobal = await axios.get(urlGlobal);
+    console.log(fetchedGlobal);
+
     const urlCountry = "https://covid19.mathdro.id/api/countries";
+    const fetchedCountry = await axios.get(urlCountry);
+
     const urlDetail = `https://covid19.mathdro.id/api/countries/${this.state.selectedCountry}/confirmed`;
-    fetchedCountry = await axios.get(urlCountry);
     const fetchedDetail = await axios.get(urlDetail);
-    console.log(fetchedCountry.data.countries);
 
+    // Nouvelles valeurs du state
     this.setState({
-      // Nouvelles valeurs du state
-
+      timeLine: timeLine,
+      globalData: fetchedGlobal,
+      countryList: fetchedCountry,
       countryData: fetchedDetail,
       loading: false,
     });
@@ -38,10 +53,25 @@ export default class App extends Component {
     const urlDetail = `https://covid19.mathdro.id/api/countries/${country}/confirmed`;
     const fetchedDetail = await axios.get(urlDetail);
 
+    const timeLineUrl = `https://api.covid19api.com/country/${country}`;
+    const timeLine = await axios.get(timeLineUrl);
+
     console.log("received prop children " + country);
-    this.setState({ selectedCountry: country, countryData: fetchedDetail });
+    this.setState({
+      selectedCountry: country,
+      countryData: fetchedDetail,
+      timeLine,
+      load2: false,
+    });
   };
   render() {
+    // TIMELINE
+    console.log("TIMELINE", this.state.timeLine);
+    // Globale
+    console.log("GLOBAL DATA", this.state.globalData);
+    // Long et Lat pour affichage des marqueurs + Graphiques
+    console.log("COUNTRY DATA", this.state.countryData);
+
     // Chargement de la page en attendant le fetch
     if (this.state.loading) {
       return (
@@ -54,15 +84,38 @@ export default class App extends Component {
     return (
       <div>
         {/* Carte */}
-        <MapAPI
+        <Map
           dataTargeted={this.state.countryData.data}
           loading={this.state.loading}
-        />
-        {/* Liste de pays */}
-        <SelectList
-          countriesList={fetchedCountry.data.countries}
           onCountryChange={this.onCountryChange}
         />
+
+        {/* Liste de pays */}
+        <SelectList
+          loading={this.state.loading}
+          countriesList={this.state.countryList.data.countries}
+          onCountryChange={this.onCountryChange}
+        />
+
+        {/* Tuiles */}
+        <Cards
+          data={this.state.countryData.data}
+          dataGb={this.state.globalData.data}
+          selected={this.state.selectedCountry}
+          timeLine={this.state.timeLine}
+          loadgin={this.state.loading}
+          load2={this.state.load2}
+        />
+
+        {/* Graphique */}
+        <div className="chart">
+          <Chart
+            data={this.state.countryData.data}
+            dataGb={this.state.globalData.data}
+            selected={this.state.selectedCountry}
+            timeLine={this.state.timeLine}
+          />
+        </div>
       </div>
     );
   }

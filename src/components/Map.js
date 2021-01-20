@@ -1,21 +1,23 @@
 import React, { Component, Fragment } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import * as countryz from "../country.json";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYW1pbmVhYmRlbGxpIiwiYSI6ImNranU1ZWZzczJ6bjcyem1qZ25zb3UxbjYifQ.hbedsblNSZl7EnltQgLLkQ";
 
+let centroid;
 let map, markers; // Bonne pratique ou non??????
-
-export default class MapAPI extends Component {
+// let option = document.querySelectorAll(".optionList");
+export default class Map extends Component {
   state = {
     lng: 2.3863,
     lat: 47.261,
     zoom: 4.5,
+    loading: true,
   };
 
   componentDidMount() {
-    // const confirmed = confirmedCases.default;
     // Création de la carte
     map = new mapboxgl.Map({
       container: this.mapContainer,
@@ -43,32 +45,33 @@ export default class MapAPI extends Component {
           .addTo(map);
       }
     );
-    console.log("hello world");
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(/*prevProps, prevState, snapshot*/) {
     // Suppresion anciens marqueurs
     markers.forEach((marker) => marker.remove());
-    // Ajout des nouveaux marqueurs
-    markers = Object.entries(this.props.dataTargeted).map(
-      ([key, value], index) => {
-        return new mapboxgl.Marker({
-          color: "#FFFFFF",
-          draggable: false,
-        })
-          .setLngLat([value.long, value.lat])
-          .addTo(map);
-      }
-    );
-    // Nouveau focus de la carte
-    map.on("move", () => {
-      this.setState({
-        lng: map.getCenter().lng.toFixed(4),
-        lat: map.getCenter().lat.toFixed(4),
-        zoom: map.getZoom().toFixed(2),
-      });
+
+    // Ajout des nouveaux marqueurs // Marqueurs OK
+    markers = Object.entries(this.props.dataTargeted).map(([key, value]) => {
+      centroid = value;
+      return new mapboxgl.Marker({
+        color: "#FFFFFF",
+        draggable: false,
+      })
+        .setLngLat([value.long, value.lat])
+        .addTo(map);
     });
-    console.log(Date.now());
+
+    // fetch de country.json
+    Object.entries(countryz.default).map(([key, count]) => {
+      if (count.name === centroid.countryRegion) {
+        map.flyTo({
+          center: [count.long, count.lat],
+          zoom: 4,
+          essential: true,
+        });
+      }
+    });
   }
 
   render() {
