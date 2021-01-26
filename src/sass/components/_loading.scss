@@ -1,0 +1,17 @@
+.loadingContent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: $primary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    color: $secondary;
+    font-weight: bold;
+    font-size: 4rem;
+  }
+}

@@ -82,10 +82,10 @@ export default class Map extends Component {
           Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
           {this.state.zoom}
         </div>
-        <div>
+        <div className="mapWrapper">
           <div
-            ref={(el) => (this.mapContainer = el)}
             className="mapContainer"
+            ref={(el) => (this.mapContainer = el)}
           />
         </div>
       </Fragment>

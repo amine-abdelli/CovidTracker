@@ -20,7 +20,7 @@ const SelectList = ({ onCountryChange, countriesList, loading }) => {
     <div>
       <Select
         showSearch
-        style={{ width: 200 }}
+        style={{ width: 300 }}
         placeholder="Choix du pays"
         optionFilterProp="children"
         onChange={onChange}

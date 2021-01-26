@@ -82,20 +82,41 @@ export default class App extends Component {
     }
 
     return (
-      <div>
-        {/* Carte */}
-        <Map
-          dataTargeted={this.state.countryData.data}
-          loading={this.state.loading}
-          onCountryChange={this.onCountryChange}
-        />
+      <div className="main">
+        <header>
+          <div className="brand">
+            <div className="logo">
+              <img src={`${process.env.PUBLIC_URL}/img/Vector.svg`} alt="" />
+            </div>
+            <div className="covtr">
+              <p>
+                C<small>oronavirus</small>
+              </p>
+              <p className="tracker">tracker</p>
+            </div>
+          </div>
 
-        {/* Liste de pays */}
-        <SelectList
-          loading={this.state.loading}
-          countriesList={this.state.countryList.data.countries}
-          onCountryChange={this.onCountryChange}
-        />
+          {/* Liste de pays */}
+          <SelectList
+            className="selectList"
+            loading={this.state.loading}
+            countriesList={this.state.countryList.data.countries}
+            onCountryChange={this.onCountryChange}
+          />
+
+          <div className="nav">
+            <p>Monde</p>
+            <p>Pays</p>
+          </div>
+        </header>
+        {/* Carte */}
+        <div className="mapWrapper">
+          <Map
+            dataTargeted={this.state.countryData.data}
+            loading={this.state.loading}
+            onCountryChange={this.onCountryChange}
+          />
+        </div>
 
         {/* Tuiles */}
         <Cards
