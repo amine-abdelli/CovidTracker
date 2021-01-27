@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import CountUp from "react-countup";
-import { Card, Row } from "antd";
+import { Col, Row } from "antd";
+import { Card } from "./Card";
 
 export const Cards = ({
   dataGb: { confirmed, recovered, deaths, lastUpdate },
@@ -29,47 +29,48 @@ export const Cards = ({
 
   const event = new Date(lastUpdate);
   const options = {
-    weekday: "long",
+    weekday: "short",
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
   };
+  const updatedDate = event.toLocaleDateString("fr-FR", options);
 
   return (
     <div>
-      <div className="paragraph">
-        <p>
-          {
-            <span>
-              <CountUp start={0} end={confirmed.value} duration={5} />
-            </span>
-          }{" "}
-          cas de coronavirus dans le monde. <span>191</span> pays sont concernés
-          soit <span>78%</span> des pays du monde. Par ailleurs on décompte{" "}
-          <CountUp start={0} end={recovered.value} duration={5} /> guérisons et{" "}
-          {<CountUp start={0} end={deaths.value} duration={5} />} décés.
-        </p>
-      </div>
-
-      {/* Yoyoyo */}
       <div className="cards">
-        <Row>
-          <Card className="card" title={`Guérisons`} style={{ width: 150 }}>
-            <p>{<CountUp start={0} end={nbRecovered} duration={4} />}</p>
-          </Card>
-          <Card className="card" title={`Morts`} style={{ width: 150 }}>
-            <p>{<CountUp start={0} end={nbDeaths} duration={4} />}</p>
-          </Card>
-          <Card className="card" title={`Cas confirmés`} style={{ width: 150 }}>
-            <p>{<CountUp start={0} end={nbConfirmed} duration={4} />}</p>
-          </Card>
+        <Row justify="space-between" className="rowsb" gutter={[34, 0]}>
+          <Col md={{ span: 8 }}>
+            <Card
+              color={"#6930c3"}
+              text={"Nombre de cas confirmés"}
+              title={"Confirmés"}
+              data={nbConfirmed}
+              date={updatedDate}
+            />
+          </Col>
+          <Col md={{ span: 8 }}>
+            <Card
+              color={"#16c79a"}
+              text={"Nombre de guérisons"}
+              title={"Guérisons"}
+              data={nbRecovered}
+              date={updatedDate}
+            />
+          </Col>
+          <Col md={{ span: 8 }}>
+            <Card
+              color={"#ec4646"}
+              text={"Nombre de décés"}
+              title={"Décés"}
+              data={nbDeaths}
+              date={updatedDate}
+            />
+          </Col>
         </Row>
       </div>
 
-      <div>{` Dernière mise à jour ${event.toLocaleDateString(
-        "fr-FR",
-        options
-      )}`}</div>
+      {/* <div>{` Dernière mise à jour : ${updatedDate}`}</div> */}
     </div>
   );
 };

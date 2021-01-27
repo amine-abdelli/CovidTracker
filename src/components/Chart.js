@@ -28,6 +28,7 @@ const Chart = ({
 
   const barChart = (
     <Bar
+      className="chart"
       data={{
         labels: dailyData
           .filter((data) => {
@@ -51,23 +52,10 @@ const Chart = ({
               .map((data) => {
                 return data.Confirmed;
               }),
-            label: "Infectés",
-            borderColor: "#FBD266",
-            backgroundColor: "#FBD266",
+            label: "Confirmés",
+            borderColor: "#6930c3",
+            backgroundColor: "#6930c3",
 
-            fill: true,
-          },
-          {
-            data: dailyData
-              .filter((data) => {
-                return data.Country === selected && data.Province === "";
-              })
-              .map((data) => {
-                return data.Deaths;
-              }),
-            label: "Morts",
-            borderColor: "red",
-            backgroundColor: "red",
             fill: true,
           },
           {
@@ -79,8 +67,8 @@ const Chart = ({
                 return data.Recovered;
               }),
             label: "Guérisons",
-            borderColor: "#8FB0A9",
-            backgroundColor: "#8FB0A9",
+            borderColor: "#16c79a",
+            backgroundColor: "#16c79a",
             fill: true,
           },
           {
@@ -89,17 +77,15 @@ const Chart = ({
                 return data.Country === selected && data.Province === "";
               })
               .map((data) => {
-                return data.Active;
+                return data.Deaths;
               }),
-            label: "Actif",
-            borderColor: "#D76735",
-            backgroundColor: "#D76735",
+            label: "Morts",
+            borderColor: "#ec4646",
+            backgroundColor: "#ec4646",
             fill: true,
           },
         ],
       }}
-      height={200}
-      width={300}
       options={{ maintainAspectRatio: false }}
     />
   );

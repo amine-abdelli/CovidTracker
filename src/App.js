@@ -6,6 +6,9 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
 import Chart from "./components/Chart";
 import { Cards } from "./components/Cards";
+import { Col, Row } from "antd";
+import { Intro } from "./components/Intro";
+import { News } from "./components/News";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYW1pbmVhYmRlbGxpIiwiYSI6ImNranU1ZWZzczJ6bjcyem1qZ25zb3UxbjYifQ.hbedsblNSZl7EnltQgLLkQ";
@@ -37,6 +40,8 @@ export default class App extends Component {
 
     const urlDetail = `https://covid19.mathdro.id/api/countries/${this.state.selectedCountry}/confirmed`;
     const fetchedDetail = await axios.get(urlDetail);
+
+    // NEWS API
 
     // Nouvelles valeurs du state
     this.setState({
@@ -82,17 +87,20 @@ export default class App extends Component {
     }
 
     return (
-      <div className="main">
+      <div className="bodywrapper">
         <header>
           <div className="brand">
             <div className="logo">
-              <img src={`${process.env.PUBLIC_URL}/img/Vector.svg`} alt="" />
+              <img
+                src={`${process.env.PUBLIC_URL}/img/Vector.svg`}
+                alt="logo"
+              />
             </div>
             <div className="covtr">
-              <p>
-                C<small>oronavirus</small>
-              </p>
-              <p className="tracker">tracker</p>
+              <img
+                src={`${process.env.PUBLIC_URL}/img/Coronavirus.svg`}
+                alt=""
+              />
             </div>
           </div>
 
@@ -103,39 +111,45 @@ export default class App extends Component {
             countriesList={this.state.countryList.data.countries}
             onCountryChange={this.onCountryChange}
           />
-
-          <div className="nav">
-            <p>Monde</p>
-            <p>Pays</p>
-          </div>
         </header>
-        {/* Carte */}
-        <div className="mapWrapper">
-          <Map
-            dataTargeted={this.state.countryData.data}
-            loading={this.state.loading}
-            onCountryChange={this.onCountryChange}
-          />
-        </div>
 
-        {/* Tuiles */}
-        <Cards
-          data={this.state.countryData.data}
-          dataGb={this.state.globalData.data}
-          selected={this.state.selectedCountry}
-          timeLine={this.state.timeLine}
-          loadgin={this.state.loading}
-          load2={this.state.load2}
-        />
-
-        {/* Graphique */}
-        <div className="chart">
-          <Chart
-            data={this.state.countryData.data}
-            dataGb={this.state.globalData.data}
-            selected={this.state.selectedCountry}
-            timeLine={this.state.timeLine}
-          />
+        <div className="main">
+          <Row gutter={[32, 16]} className="row" justify="space-around">
+            <Col className="leftcolumn" md={{ span: 12 }}>
+              <div className="aligncontent">
+                <Intro dataGb={this.state.globalData.data} />
+                {/* Tuiles */}
+                <Cards
+                  data={this.state.countryData.data}
+                  dataGb={this.state.globalData.data}
+                  selected={this.state.selectedCountry}
+                  timeLine={this.state.timeLine}
+                  loadgin={this.state.loading}
+                  load2={this.state.load2}
+                />
+              </div>
+              <News />
+            </Col>
+            <Col md={{ span: 12 }} className="colright">
+              {/* Carte */}
+              <div className="mapWrapper">
+                <Map
+                  dataTargeted={this.state.countryData.data}
+                  loading={this.state.loading}
+                  onCountryChange={this.onCountryChange}
+                />
+              </div>
+              {/* Graphique */}
+              <div className="chart">
+                <Chart
+                  data={this.state.countryData.data}
+                  dataGb={this.state.globalData.data}
+                  selected={this.state.selectedCountry}
+                  timeLine={this.state.timeLine}
+                />
+              </div>
+            </Col>
+          </Row>
         </div>
       </div>
     );

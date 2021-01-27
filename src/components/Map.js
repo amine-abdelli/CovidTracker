@@ -8,12 +8,11 @@ mapboxgl.accessToken =
 
 let centroid;
 let map, markers; // Bonne pratique ou non??????
-// let option = document.querySelectorAll(".optionList");
 export default class Map extends Component {
   state = {
     lng: 2.3863,
     lat: 47.261,
-    zoom: 4.5,
+    zoom: 4,
     loading: true,
   };
 
@@ -27,6 +26,7 @@ export default class Map extends Component {
     });
     // Focus de la carte par défault
     // map.on("move", () => {
+    //   console.log("MAP.ON MOVE");
     //   this.setState({
     //     lng: map.getCenter().lng.toFixed(4),
     //     lat: map.getCenter().lat.toFixed(4),
@@ -61,7 +61,6 @@ export default class Map extends Component {
         .setLngLat([value.long, value.lat])
         .addTo(map);
     });
-
     // fetch de country.json
     Object.entries(countryz.default).map(([key, count]) => {
       if (count.name === centroid.countryRegion) {
@@ -77,17 +76,8 @@ export default class Map extends Component {
   render() {
     return (
       <Fragment>
-        {this.myMap}
-        <div className=".sideBar">
-          Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
-          {this.state.zoom}
-        </div>
-        <div className="mapWrapper">
-          <div
-            className="mapContainer"
-            ref={(el) => (this.mapContainer = el)}
-          />
-        </div>
+        {/*  {this.myMap} */}
+        <div className="mapContainer" ref={(el) => (this.mapContainer = el)} />
       </Fragment>
     );
   }
