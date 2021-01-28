@@ -3,19 +3,41 @@
 
 body {
   .bodywrapper {
+    font-family: "Roboto", sans-serif;
     border-left: 1.5rem solid $secondary;
     border-right: 1.5rem solid $secondary;
-    background-color: $primary;
-    height: 100vh;
+    background: linear-gradient(
+          90deg,
+          $bg-color ($dot-space - $dot-size),
+          transparent 1%
+        )
+        center,
+      linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
+      $dot-color;
+    background-size: $dot-space $dot-space;
+    min-height: 100vh;
+
     header {
       display: flex;
-      background-color: $primary;
       width: 100%;
       align-items: center;
       .brand {
         display: flex;
         align-items: center;
         margin: 0 1rem;
+        .icon {
+          color: $secondary;
+          font-size: 4.5rem;
+          animation: spin 60s linear infinite;
+          @keyframes spin {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
+          }
+        }
         .covtr {
           color: $secondary;
           margin: 1rem;
@@ -27,42 +49,77 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: $primary;
       color: $text;
-      // height: 100%;
       padding: 0 3rem;
+
       .row {
         width: 100%;
         height: 100%;
         .leftcolumn {
           padding: 1rem;
-          background-color: $secondary;
           min-height: 100%;
           .aligncontent {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             height: 100%;
+            .titlecountry {
+              transition: all 1s ease;
+              text-align: center;
+              text-transform: uppercase;
+              letter-spacing: 1.5rem;
+              font-weight: bold;
+              margin-bottom: 1rem;
+              font-size: 3rem;
+              text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+            }
             .paragraph {
               p {
-                // ici pour le responsive
-                font-size: 1.5rem;
-                //
+                font-size: 2.3rem;
                 text-align: center;
-                margin-top: 1rem;
-                .conf {
-                  color: #6930c3;
+                margin: 1rem 0;
+                padding: 0;
+
+                span {
+                  font-weight: bold;
                 }
               }
             }
           }
         }
         .colright {
-          background-color: green;
           display: flex;
+          justify-content: center;
           align-items: center;
           flex-direction: column;
           min-height: 100%;
+          .svg {
+            display: flex;
+            justify-content: center;
+            width: 75%;
+            transform: translateY(-2rem);
+            .float {
+              color: $secondary;
+              font-size: 6rem;
+              animation: float 5s ease-in-out infinite;
+              transform: translateY(-5rem);
+              transition: all 1s ease;
+              position: absolute;
+              top: 5rem;
+            }
+          }
+
+          @keyframes float {
+            0% {
+              transform: translatey(0px) rotate(-10deg);
+            }
+            50% {
+              transform: translatey(-4rem) rotate(5deg);
+            }
+            100% {
+              transform: translatey(0px) rotate(-10deg);
+            }
+          }
         }
       }
     }

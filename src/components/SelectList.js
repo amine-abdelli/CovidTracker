@@ -19,10 +19,9 @@ const SelectList = ({ onCountryChange, countriesList, loading }) => {
 
   return (
     <div>
-      <NativeSelect />
       <Select
         showSearch
-        style={{ width: 300 }}
+        style={{ width: 210 }}
         placeholder="Choix du pays"
         optionFilterProp="children"
         onChange={onChange}

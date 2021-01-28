@@ -11,7 +11,7 @@ let map, markers; // Bonne pratique ou non??????
 export default class Map extends Component {
   state = {
     lng: 2.3863,
-    lat: 47.261,
+    lat: 47.161,
     zoom: 4,
     loading: true,
   };
