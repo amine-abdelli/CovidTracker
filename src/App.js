@@ -11,6 +11,7 @@ import { Intro } from "./components/Intro";
 import { Loading } from "./components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVirus } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
 
 // import VirtualizedList, { Scroller } from "./components/Scroller";
 
@@ -93,10 +94,7 @@ export default class App extends Component {
               <FontAwesomeIcon className="icon" icon={faVirus} />
             </div>
             <div className="covtr">
-              <img
-                src={`${process.env.PUBLIC_URL}/img/Coronavirus.svg`}
-                alt=""
-              />
+              <img src={require("./img/Coronavirus.svg").default} alt="" />
             </div>
           </div>
 
@@ -111,20 +109,36 @@ export default class App extends Component {
 
         <div className="main">
           <Row gutter={[32, 16]} className="row" justify="space-around">
-            <Col className="leftcolumn" md={{ span: 12 }}>
+            <Col className="leftcolumn" lg={{ span: 12 }}>
               <div className="aligncontent">
                 <Intro dataGb={this.state.globalData.data} />
                 {/* Affichage pays corresponsand */}
                 <p className="titlecountry">{this.state.selectedCountry}</p>
                 {/* Tuiles */}
-                <Cards
-                  data={this.state.countryData.data}
-                  dataGb={this.state.globalData.data}
-                  selected={this.state.selectedCountry}
-                  timeLine={this.state.timeLine}
-                  loading={this.state.loading}
-                  load2={this.state.load2}
-                />
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    x: 100,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  transition={{
+                    delay: 2,
+                    duration: 5,
+                  }}
+                  className="cards"
+                >
+                  <Cards
+                    data={this.state.countryData.data}
+                    dataGb={this.state.globalData.data}
+                    selected={this.state.selectedCountry}
+                    timeLine={this.state.timeLine}
+                    loading={this.state.loading}
+                    load2={this.state.load2}
+                  />
+                </motion.div>
                 {/* Graphique */}
                 <div className="chart">
                   <Chart
@@ -136,7 +150,7 @@ export default class App extends Component {
                 </div>
               </div>
             </Col>
-            <Col md={{ span: 12 }} className="colright">
+            <Col lg={{ span: 12 }} className="colright">
               {/* Carte */}
               <div className="mapWrapper">
                 <Map

@@ -1,5 +1,6 @@
 @import "./variables", "./reset", "./mixins", "./components/loading",
-  "./components/chart", "./components/map", "./components/cards";
+  "./components/chart", "./components/map", "./components/cards",
+  "./components/header";
 
 body {
   .bodywrapper {
@@ -16,35 +17,7 @@ body {
       $dot-color;
     background-size: $dot-space $dot-space;
     min-height: 100vh;
-
-    header {
-      display: flex;
-      width: 100%;
-      align-items: center;
-      .brand {
-        display: flex;
-        align-items: center;
-        margin: 0 1rem;
-        .icon {
-          color: $secondary;
-          font-size: 4.5rem;
-          animation: spin 60s linear infinite;
-          @keyframes spin {
-            from {
-              transform: rotate(0deg);
-            }
-            to {
-              transform: rotate(360deg);
-            }
-          }
-        }
-        .covtr {
-          color: $secondary;
-          margin: 1rem;
-          font-size: 2rem;
-        }
-      }
-    }
+    // -- // -- // -- //
     .main {
       display: flex;
       align-items: center;
@@ -61,7 +34,8 @@ body {
           .aligncontent {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: space-between;
+            // align-items: stretch;
             height: 100%;
             .titlecountry {
               transition: all 1s ease;
@@ -94,15 +68,16 @@ body {
           flex-direction: column;
           min-height: 100%;
           .svg {
+            position: relative;
             display: flex;
             justify-content: center;
             width: 75%;
-            transform: translateY(-2rem);
+            // transform: translateY(-2rem);
             .float {
               color: $secondary;
               font-size: 6rem;
               animation: float 5s ease-in-out infinite;
-              transform: translateY(-5rem);
+              transform: translateY(-25rem);
               transition: all 1s ease;
               position: absolute;
               top: 5rem;
@@ -125,26 +100,13 @@ body {
     }
   }
 }
-
-.ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  background-color: $primary;
-  border: 1px solid $secondary;
-  color: $text;
+@media screen and (min-width: 0px) and (max-width: 589px) {
+  .mapContainer {
+    width: 32rem;
+  }
 }
-
-.ant-select-show-search.ant-select:not(.ant-select-customize-input)
-  .ant-select-selector {
-  background-color: $primary;
-  border: 1px solid $secondary;
-  color: $text;
-}
-.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
-  border-color: $secondary;
-  color: $text;
-}
-
-.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
-  .ant-select-selector {
-  border-color: $secondary;
-  color: $text;
+@media screen and (min-width: 589px) and (max-width: 1329px) {
+  .mapContainer {
+    width: 50rem;
+  }
 }

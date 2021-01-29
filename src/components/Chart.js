@@ -90,7 +90,11 @@ const Chart = ({
     />
   );
   console.log("MYDATA", timeLine.data);
-  return <div className="chartMain">{barChart}</div>;
+  return (
+    <>
+      <div className="chartMain">{barChart}</div>
+    </>
+  );
 };
 
 export default Chart;
