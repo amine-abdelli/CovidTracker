@@ -5,8 +5,6 @@ import { Card } from "./Card";
 export const Cards = ({
   dataGb: { confirmed, recovered, deaths, lastUpdate },
   data,
-  selected,
-  timeLine,
 }) => {
   const [globalDataPC, setGlobalDataPC] = useState({});
 

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import * as countryz from "../country.json";
+import { motion } from "framer-motion";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYW1pbmVhYmRlbGxpIiwiYSI6ImNranU1ZWZzczJ6bjcyem1qZ25zb3UxbjYifQ.hbedsblNSZl7EnltQgLLkQ";
@@ -77,7 +78,22 @@ export default class Map extends Component {
     return (
       <Fragment>
         {/*  {this.myMap} */}
-        <div className="mapContainer" ref={(el) => (this.mapContainer = el)} />
+        <motion.div
+          initial={{
+            opacity: 0,
+            scale: 0.9,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{
+            duration: 1,
+            delay: 2.5,
+          }}
+          className="mapContainer"
+          ref={(el) => (this.mapContainer = el)}
+        />
       </Fragment>
     );
   }

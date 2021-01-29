@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Line, Bar } from "react-chartjs-2";
-import {} from "react-chartjs-2";
+// import {} from "react-chartjs-2";
 
 const Chart = ({
   dataGb: { confirmed, recovered, deaths, lastUpdate },
@@ -13,18 +13,6 @@ const Chart = ({
   useEffect(() => {
     setDailyData(timeLine.data);
   }, [timeLine]);
-  // console.log("DATAGB", confirmed, recovered, deaths, lastUpdate);
-  // console.log("DATA", data);
-  // console.log("TIMELINE", timeLine.data[0].Date);
-  // console.log("TIMELINE STATE", dailyData);
-
-  // dailyData
-  //   .filter((data) => {
-  //     return data.Country === selected && data.Province === "";
-  //   })
-  //   .map((data) => {
-  //     return data.Deaths;
-  //   });
 
   const barChart = (
     <Bar

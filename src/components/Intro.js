@@ -1,18 +1,24 @@
 import React from "react";
+import { motion } from "framer-motion";
 import CountUp from "react-countup";
 
 export const Intro = ({
   dataGb: { confirmed, recovered, deaths, lastUpdate },
 }) => {
   return (
-    <div className="paragraph">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 2.5, duration: 1.5 }}
+      className="paragraph"
+    >
       <p>
-        On décompte plus de{" "}
+        On compte à ce jour plus de{" "}
         <span style={{ color: "#6930c3" }}>
           <CountUp start={0} end={confirmed.value} duration={3} />
         </span>{" "}
-        personnes qui ont été infectés par le coronavirus dans le monde et{" "}
-        <span>191</span> pays sont concernés. Par ailleurs on décompte{" "}
+        cas de coronavirus dans le monde depuis le <span>1er janvier 2020</span>
+        , et ce nombre grandit vite. Par ailleurs on décompte{" "}
         <span style={{ color: "#16c79a" }}>
           <CountUp start={0} end={recovered.value} duration={3.5} />
         </span>{" "}
@@ -22,6 +28,6 @@ export const Intro = ({
         </span>{" "}
         décés.
       </p>
-    </div>
+    </motion.div>
   );
 };

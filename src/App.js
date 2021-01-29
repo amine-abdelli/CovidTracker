@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Map, SelectList } from "./components";
 import mapboxgl from "mapbox-gl";
 import "./sass/App.scss";
@@ -11,7 +11,7 @@ import { Intro } from "./components/Intro";
 import { Loading } from "./components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVirus } from "@fortawesome/free-solid-svg-icons";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 // import VirtualizedList, { Scroller } from "./components/Scroller";
 
@@ -21,10 +21,7 @@ mapboxgl.accessToken =
 export default class App extends Component {
   state = {
     data: {},
-    dataPC: {},
     loading: true,
-    load2: true,
-    listLoading: true,
     globalData: null,
     selectedCountry: "France",
     timeLine: null,
@@ -70,31 +67,69 @@ export default class App extends Component {
       selectedCountry: country,
       countryData: fetchedDetail,
       timeLine,
-      load2: false,
     });
   };
   render() {
-    // TIMELINE
-    console.log("TIMELINE", this.state.timeLine);
-    // Globale
-    console.log("GLOBAL DATA", this.state.globalData);
-    // Long et Lat pour affichage des marqueurs + Graphiques
-    console.log("COUNTRY DATA", this.state.countryData);
-
     // Chargement de la page en attendant le fetch
     if (this.state.loading) {
       return <Loading />;
     }
 
+    // setTimeout(() => this.setState({ blockOrNone: "none" }), 2200);
     return (
       <div className="bodywrapper">
-        <header>
+        {/* -------------------------------------- */}
+        <motion.div
+          animate={{ display: "none" }}
+          transition={{ delay: 2.7 }}
+          className="vanish"
+        >
+          <AnimatePresence>
+            <motion.div
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 0 }}
+              transition={{ delay: 2, duration: 1, ease: "easeInOut" }}
+              exit={{ opacity: 1 }}
+              className="loadingContent"
+            >
+              <div className="box">
+                <div className="virusicon">
+                  <FontAwesomeIcon className="icon moveup" icon={faVirus} />
+                </div>
+                <img
+                  className="img"
+                  src={require("./img/Coronavirus.svg").default}
+                  alt=""
+                />
+              </div>
+              <motion.div
+                initial={{ opacity: 1, width: 200 }}
+                animate={{ opacity: 1, width: 2000 }}
+                transition={{ duration: 1.5 }}
+                className="sideStrip"
+              ></motion.div>
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+
+        {/* -------------------------------------- */}
+        <motion.header
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            delay: 2,
+            duration: 1,
+          }}
+        >
           <div className="brand">
             <div className="icon">
               <FontAwesomeIcon className="icon" icon={faVirus} />
             </div>
             <div className="covtr">
-              <img src={require("./img/Coronavirus.svg").default} alt="" />
+              <img
+                src={require("./img/Coronavirus_green.svg").default}
+                alt=""
+              />
             </div>
           </div>
 
@@ -105,7 +140,7 @@ export default class App extends Component {
             countriesList={this.state.countryList.data.countries}
             onCountryChange={this.onCountryChange}
           />
-        </header>
+        </motion.header>
 
         <div className="main">
           <Row gutter={[32, 16]} className="row" justify="space-around">
@@ -113,32 +148,15 @@ export default class App extends Component {
               <div className="aligncontent">
                 <Intro dataGb={this.state.globalData.data} />
                 {/* Affichage pays corresponsand */}
-                <p className="titlecountry">{this.state.selectedCountry}</p>
+
                 {/* Tuiles */}
-                <motion.div
-                  initial={{
-                    opacity: 0,
-                    x: 100,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                  }}
-                  transition={{
-                    delay: 2,
-                    duration: 5,
-                  }}
-                  className="cards"
-                >
+                <div>
                   <Cards
                     data={this.state.countryData.data}
                     dataGb={this.state.globalData.data}
-                    selected={this.state.selectedCountry}
-                    timeLine={this.state.timeLine}
                     loading={this.state.loading}
-                    load2={this.state.load2}
                   />
-                </motion.div>
+                </div>
                 {/* Graphique */}
                 <div className="chart">
                   <Chart
@@ -159,7 +177,21 @@ export default class App extends Component {
                   onCountryChange={this.onCountryChange}
                 />
               </div>
-              <div className="svg">
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  scale: 0.95,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 1,
+                  delay: 2.5,
+                }}
+                className="svg"
+              >
                 <svg
                   id="ba65d029-7b6e-4d16-9739-50ea7099b679"
                   className="svg"
@@ -693,7 +725,7 @@ export default class App extends Component {
                   />
                 </svg>
                 <FontAwesomeIcon className="float" icon={faVirus} />
-              </div>
+              </motion.div>
             </Col>
           </Row>
         </div>

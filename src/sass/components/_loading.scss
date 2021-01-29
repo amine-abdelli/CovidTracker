@@ -1,68 +1,42 @@
-// @import url(https://fonts.googleapis.com/css?family=Montserrat);
-
-// // ボールのサイズ
-// $width: 5rem;
-// $height: 5rem;
-
-// // バウンドの距離
-// $bounce_height: 150px;
-
-// .bounceball {
-//   position: absolute;
-//   display: inline-block;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   height: 37px;
-//   width: $width;
-//   &:before {
-//     position: absolute;
-//     content: "";
-//     display: block;
-
-//     width: $width;
-//     height: $height;
-//     border-radius: 50%;
-//     background-color: $secondary;
-//     transform-origin: 50%;
-//     animation: bounce 500ms alternate infinite ease;
-//   }
-// }
-
-// @keyframes bounce {
-//   0% {
-//     top: $bounce_height;
-//     height: 5px;
-//     border-radius: 60px 60px 20px 20px;
-//     transform: scaleX(2);
-//   }
-//   35% {
-//     height: $height;
-//     border-radius: 50%;
-//     transform: scaleX(1);
-//   }
-//   100% {
-//     top: 0;
-//   }
-// }
-
 .loadingContent {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: $primary;
+  background-color: $secondary;
   color: $secondary;
+  z-index: 1;
 
-  p {
+  .box {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-60%, -50%);
-    font-size: 5rem;
-    .move {
-      animation: bounce 500ms alternate infinite ease;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .virusicon {
+      color: $primary;
+      font-size: 13rem;
+      margin: 2rem;
+      .moveup {
+        transform: translateY(-10px);
+      }
+
+      animation: spin 30s linear infinite;
+      transform: translateY(0rem);
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    }
+    .img {
+      width: 37rem;
     }
   }
 
@@ -72,23 +46,6 @@
     top: 0;
     bottom: 0;
     width: 20rem;
-    background-color: $secondary;
-  }
-}
-
-@keyframes bounce {
-  0% {
-    top: 10px;
-    height: 5px;
-    border-radius: 60px 60px 20px 20px;
-    transform: scaleX(2);
-  }
-  35% {
-    height: 10px;
-    border-radius: 50%;
-    transform: scaleX(1);
-  }
-  100% {
-    top: 0;
+    background-color: $primary;
   }
 }
