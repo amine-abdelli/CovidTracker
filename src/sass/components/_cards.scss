@@ -6,7 +6,7 @@
     justify-content: center;
     .card {
       position: relative;
-
+      min-height: 100%;
       display: flex;
       color: #605f5f;
       flex-direction: column;
