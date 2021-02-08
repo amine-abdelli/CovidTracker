@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { Map, SelectList } from "./components";
 import mapboxgl from "mapbox-gl";
 import "./sass/App.scss";
@@ -10,7 +10,7 @@ import { Col, Row } from "antd";
 import { Intro } from "./components/Intro";
 import { Loading } from "./components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVirus } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faVirus } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
 
 // import VirtualizedList, { Scroller } from "./components/Scroller";
@@ -36,7 +36,6 @@ export default class App extends Component {
 
     const urlGlobal = "https://covid19.mathdro.id/api";
     const fetchedGlobal = await axios.get(urlGlobal);
-    console.log(fetchedGlobal);
 
     const urlCountry = "https://covid19.mathdro.id/api/countries";
     const fetchedCountry = await axios.get(urlCountry);
@@ -62,7 +61,6 @@ export default class App extends Component {
     const timeLineUrl = `https://api.covid19api.com/country/${country}`;
     const timeLine = await axios.get(timeLineUrl);
 
-    console.log("received prop children " + country);
     this.setState({
       selectedCountry: country,
       countryData: fetchedDetail,
@@ -78,7 +76,14 @@ export default class App extends Component {
     // setTimeout(() => this.setState({ blockOrNone: "none" }), 2200);
     return (
       <div className="bodywrapper">
+        <FontAwesomeIcon className="icon_float f1" icon={faVirus} />
+        <FontAwesomeIcon className="icon_float f2" icon={faVirus} />
+        <FontAwesomeIcon className="icon_float f3" icon={faVirus} />
+        <FontAwesomeIcon className="icon_float f4" icon={faVirus} />
+        <FontAwesomeIcon className="icon_float f5" icon={faVirus} />
+
         {/* -------------------------------------- */}
+        <div className="line"></div>
         <motion.div
           animate={{ display: "none" }}
           transition={{ delay: 2.7 }}
@@ -140,15 +145,28 @@ export default class App extends Component {
             countriesList={this.state.countryList.data.countries}
             onCountryChange={this.onCountryChange}
           />
-        </motion.header>
+          <motion.div
+            initial={{ opacity: 0, x: 1000 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              type: "tween",
 
+              delay: 5,
+              duration: 1,
+            }}
+            className="leftArrow"
+          >
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </motion.div>
+        </motion.header>
+        <div className="gap"></div>
         <div className="main">
           <Row gutter={[32, 16]} className="row" justify="space-around">
-            <Col className="leftcolumn" lg={{ span: 12 }}>
+            <Col className="leftcolumn" span={24} lg={12}>
               <div className="aligncontent">
                 <Intro dataGb={this.state.globalData.data} />
                 {/* Affichage pays corresponsand */}
-
+                <p className="titlecountry">{this.state.selectedCountry}</p>
                 {/* Tuiles */}
                 <div>
                   <Cards
@@ -168,7 +186,7 @@ export default class App extends Component {
                 </div>
               </div>
             </Col>
-            <Col lg={{ span: 12 }} className="colright">
+            <Col span={24} lg={12} className="colright">
               {/* Carte */}
               <div className="mapWrapper">
                 <Map
@@ -733,8 +751,3 @@ export default class App extends Component {
     );
   }
 }
-
-// Componentdidmount
-// const url = "https://covid19.mathdro.id/api";
-// const urlPerCountry = "https://covid19.mathdro.id/api/confirmed";
-// const urlTimeCountry = `https://covid19.mathdro.id/api/daily/${date}`;

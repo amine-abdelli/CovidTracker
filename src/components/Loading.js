@@ -1,5 +1,5 @@
 import React from "react";
-import { animatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVirus } from "@fortawesome/free-solid-svg-icons";
 

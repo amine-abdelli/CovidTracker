@@ -1,7 +1,7 @@
 import React from "react";
 import CountUp from "react-countup";
 
-export const Card = ({ title, data, color, text, date }) => {
+export const Card = ({ data, color, text, date }) => {
   const style = {
     borderBottom: `6px solid ${color}`,
   };

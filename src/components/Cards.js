@@ -38,7 +38,7 @@ export const Cards = ({
     <div>
       <div className="cards">
         <Row justify="space-between" className="rowsb" gutter={[34, 0]}>
-          <Col md={{ span: 12 }} lg={{ span: 8 }}>
+          <Col className="colCard" span={24} md={12} lg={8}>
             <Card
               color={"#6930c3"}
               text={"Nombre de cas confirmés"}
@@ -47,7 +47,7 @@ export const Cards = ({
               date={updatedDate}
             />
           </Col>
-          <Col md={{ span: 12 }} lg={{ span: 8 }}>
+          <Col className="colCard" span={24} md={12} lg={8}>
             <Card
               color={"#16c79a"}
               text={"Nombre de guérisons"}
@@ -56,7 +56,7 @@ export const Cards = ({
               date={updatedDate}
             />
           </Col>
-          <Col md={{ span: 12 }} lg={{ span: 8 }}>
+          <Col className="colCard" span={24} md={12} lg={8}>
             <Card
               color={"#ec4646"}
               text={"Nombre de décés"}

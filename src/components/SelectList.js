@@ -1,10 +1,8 @@
 import React from "react";
 import { Select } from "antd";
-import { NativeSelect, FormControl } from "@material-ui/core";
 
 const SelectList = ({ onCountryChange, countriesList, loading }) => {
   function onChange(value) {
-    console.log(`selected in children ${value}`);
     onCountryChange(value);
   }
 

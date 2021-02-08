@@ -1,24 +1,30 @@
 @import "./variables", "./reset", "./mixins", "./components/loading",
   "./components/chart", "./components/map", "./components/cards",
-  "./components/header";
+  "./components/header", "./components/floats";
 
 body {
   .bodywrapper {
+    overflow: hidden;
     font-family: "Roboto", sans-serif;
     border-left: 1.5rem solid $secondary;
     border-right: 1.5rem solid $secondary;
-    background: linear-gradient(
-          90deg,
-          $bg-color ($dot-space - $dot-size),
-          transparent 1%
-        )
-        center,
-      linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
-      $dot-color;
-    background-size: $dot-space $dot-space;
+    // background: linear-gradient(
+    //       90deg,
+    //       $bg-color ($dot-space - $dot-size),
+    //       transparent 1%
+    //     )
+    //     center,
+    //   linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
+    //   $dot-color;
+    // background-size: $dot-space $dot-space;
     min-height: 100vh;
     // -- // -- // -- //
+    .gap {
+      height: 5rem;
+      width: 100%;
+    }
     .main {
+      padding-top: 15rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -49,11 +55,11 @@ body {
             }
             .paragraph {
               p {
-                font-size: 2.5rem;
+                font-size: 2rem;
                 text-align: center;
                 margin: 1rem 0;
                 padding: 0;
-
+                line-height: 1.5;
                 span {
                   font-weight: bold;
                 }
