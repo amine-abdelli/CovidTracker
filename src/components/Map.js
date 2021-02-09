@@ -63,7 +63,7 @@ export default class Map extends Component {
         .addTo(map);
     });
     // fetch de country.json
-    Object.entries(countryz.default).map(([key, count]) => {
+    Object.entries(countryz.default).forEach(([key, count]) => {
       if (count.name === centroid.countryRegion) {
         map.flyTo({
           center: [count.long, count.lat],

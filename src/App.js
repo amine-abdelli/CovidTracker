@@ -27,30 +27,40 @@ export default class App extends Component {
     timeLine: null,
     countryData: null,
     countryList: {},
+    error: false,
   };
 
   async componentDidMount() {
     // Fetch APIs premier rendu
-    const timeLineUrl = `https://api.covid19api.com/country/${this.state.selectedCountry}`;
-    const timeLine = await axios.get(timeLineUrl);
+    try {
+      const timeLineUrl = `https://api.covid19api.com/country/${this.state.selectedCountry}`;
+      const timeLine = await axios.get(timeLineUrl);
 
-    const urlGlobal = "https://covid19.mathdro.id/api";
-    const fetchedGlobal = await axios.get(urlGlobal);
+      const urlGlobal = "https://covid19.mathdro.id/api";
+      const fetchedGlobal = await axios.get(urlGlobal);
 
-    const urlCountry = "https://covid19.mathdro.id/api/countries";
-    const fetchedCountry = await axios.get(urlCountry);
+      // const urlCountry = `${urlGlobal}/countries`;
+      const fetchedCountry = await axios.get(`${urlGlobal}/countries`);
 
-    const urlDetail = `https://covid19.mathdro.id/api/countries/${this.state.selectedCountry}/confirmed`;
-    const fetchedDetail = await axios.get(urlDetail);
+      // const urlDetail = `${urlGlobal}/countries/${this.state.selectedCountry}/confirmed`;
+      const fetchedDetail = await axios.get(
+        `${urlGlobal}/countries/${this.state.selectedCountry}/confirmed`
+      );
 
-    // Nouvelles valeurs du state
-    this.setState({
-      timeLine: timeLine,
-      globalData: fetchedGlobal,
-      countryList: fetchedCountry,
-      countryData: fetchedDetail,
-      loading: false,
-    });
+      this.setState({
+        timeLine: timeLine,
+        globalData: fetchedGlobal,
+        countryList: fetchedCountry,
+        countryData: fetchedDetail,
+        loading: false,
+      });
+    } catch (error) {
+      console.log(error.response);
+      this.setState({
+        loading: false,
+        error: true,
+      });
+    }
   }
 
   onCountryChange = async (country) => {
@@ -71,6 +81,8 @@ export default class App extends Component {
     // Chargement de la page en attendant le fetch
     if (this.state.loading) {
       return <Loading />;
+    } else if (this.state.error) {
+      <p>Une erreur est survenue</p>;
     }
 
     // setTimeout(() => this.setState({ blockOrNone: "none" }), 2200);
