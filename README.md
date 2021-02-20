@@ -8,7 +8,7 @@
   <li><strong>Communication/Interaction between components</strong></li>
   <li><strong>Mapbox-Gl-Js</strong></li>
   <li><strong>React Libraries</strong></li>
-<ul>
+</ul>
 
 <h2>FIREBASE hosting</h2>
-Click [here](https://covidtracker-24287.web.app/) to see this project.
+<p>Click <a href="https://covidtracker-24287.web.app/">here</a> to see this project.<p>
