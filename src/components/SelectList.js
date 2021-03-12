@@ -5,7 +5,12 @@ const SelectList = ({ onCountryChange, countriesList, loading }) => {
   function onChange(value) {
     onCountryChange(value);
   }
-
+  const style = {
+    width: 350,
+    border: "3px solid black",
+    borderRadius: "5px",
+    color: "black",
+  };
   // List des pays provenant de l'API
   const selectedCountry = countriesList.map((value) => {
     return (
@@ -19,7 +24,7 @@ const SelectList = ({ onCountryChange, countriesList, loading }) => {
     <div>
       <Select
         showSearch
-        style={{ width: 210 }}
+        style={style}
         placeholder="Choix du pays"
         optionFilterProp="children"
         onChange={onChange}
